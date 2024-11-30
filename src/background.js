@@ -35,13 +35,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         console.log(blockedWebsites);
         sendResponse({value: blockedWebsites});
         break;
-    case 'add_blocked_site':
-        let newWebsite = request.value;
-        console.log(newWebsite);
-        if (!blockedWebsites.includes(newWebsite)) {
-            blockedWebsites.push(newWebsite);
+    case 'modify_blocked_sites':
+        let website = request.value;
+        console.log(website);
+        if (request.action == 'add') {
+            if (!blockedWebsites.includes(website)) {
+                blockedWebsites.push(website);
+            }
             sendResponse();
-            console.log("added website");
+        } else if (request.action == 'remove') {
+            const index = blockedWebsites.indexOf(website);
+            if (index > -1) {
+                blockedWebsites.splice(index, 1);
+            }
+            sendResponse();
         }
         break;
     }
