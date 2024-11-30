@@ -1,3 +1,5 @@
+import psl from 'psl';
+
 const generateSTYLES = () => {
   return `<style>@import url(https://fonts.googleapis.com/css?family=opensans:500);
   body {
@@ -252,7 +254,7 @@ const generateHTML = (pageName) => {
 
 chrome.runtime.sendMessage({message: "request_block"}, function (response) {
   console.log(response);
-  shouldBlock = response.value;
+  let shouldBlock = response.value;
   console.log("SHOULDBLOCK: ", shouldBlock);
   if (shouldBlock) {
     blockWebsite();
@@ -260,24 +262,12 @@ chrome.runtime.sendMessage({message: "request_block"}, function (response) {
 });
 
 function blockWebsite() {
-  console.log(window.location.hostname);
-  let domain = /:\/\/([^\/]+)/.exec(window.location.href)[1];
-  console.log(domain);
+  let sld = psl.parse(window.location.hostname).sld;
+  // change twitter to the correct name
+  if (sld == 'x') {
+    sld = 'twitter';
+  }
   document.head.innerHTML = generateSTYLES();
-  document.body.innerHTML = generateHTML(domain.toUpperCase());
-  // switch (window.location.hostname) {
-  //   case "www.youtube.com":
-  //     document.head.innerHTML = generateSTYLES();
-  //     document.body.innerHTML = generateHTML("YOUTUBE");
-  //     break;
-  //   case "x.com":
-  //     document.head.innerHTML = generateSTYLES();
-  //     document.body.innerHTML = generateHTML("TWITTER");
-  //     break;
-  //   case "www.reddit.com":
-  //     document.head.innerHTML = generateSTYLES();
-  //     document.body.innerHTML = generateHTML("REDDIT");
-  //     break;
-  // }
+  document.body.innerHTML = generateHTML(sld.toUpperCase());
 }
   

@@ -1,5 +1,4 @@
 const path = require('path');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
@@ -17,10 +16,6 @@ module.exports = {
     watch: true,
     devtool: 'cheap-module-source-map',
     plugins: [
-        // new HtmlWebpackPlugin({
-        //     template: './src/popup.html',
-        //     filename: 'popup.html'
-        // }),
         new CopyWebpackPlugin({
             patterns: [{
                     from: 'static'
