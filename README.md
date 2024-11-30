@@ -7,5 +7,6 @@ Stole the clouds and some code from [here](https://www.youtube.com/watch?v=dIrXI
 - [ ] Give ability to add and remove blocked websites
 - [ ] Add checklist of tasks
 - [ ] Add a calender
+- [ ] Allow users to take breaks
 - [ ] Allow people to play music
 - [ ] Create an account system so people can sync to other devices
