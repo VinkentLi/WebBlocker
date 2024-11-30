@@ -1,5 +1,5 @@
 let shouldBlock = true;
-let blockedWebsites = ["www.youtube.com", "x.com", "www.reddit.com"];
+let blockedWebsites = ["www.youtube.com", "www.reddit.com"];
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     switch (request.message) {
@@ -35,5 +35,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         console.log(blockedWebsites);
         sendResponse({value: blockedWebsites});
         break;
+    case 'add_blocked_site':
+        let newWebsite = request.value;
+        console.log(newWebsite);
+        if (!blockedWebsites.includes(newWebsite)) {
+            blockedWebsites.push(newWebsite);
+            sendResponse();
+            console.log("added website");
+        }
+        break;
     }
+    return true;
 });
