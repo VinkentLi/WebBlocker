@@ -13,6 +13,14 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         clean: true,
     },
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: ['to-string-loader', 'css-loader'],
+            },
+        ],
+    },
     mode: 'development',
     watch: true,
     devtool: 'cheap-module-source-map',
@@ -26,5 +34,5 @@ module.exports = {
                 },
             ]
         }),
-    ]
+    ],
 }
