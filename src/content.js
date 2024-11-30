@@ -258,31 +258,26 @@ chrome.runtime.sendMessage({message: "request_block"}, function (response) {
     blockWebsite();
   }
 });
-// chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-//   if (request.message === 'send_block') {
-//     shouldBlock = request.value;
-//     console.log("SHOULDBLOCK: " + shouldBlock);
-//     if (shouldBlock) {
-//       blockWebsite();
-//     }
-//   }
-// });
 
 function blockWebsite() {
   console.log(window.location.hostname);
-  switch (window.location.hostname) {
-    case "www.youtube.com":
-      document.head.innerHTML = generateSTYLES();
-      document.body.innerHTML = generateHTML("YOUTUBE");
-      break;
-    case "x.com":
-      document.head.innerHTML = generateSTYLES();
-      document.body.innerHTML = generateHTML("TWITTER");
-      break;
-    case "www.reddit.com":
-      document.head.innerHTML = generateSTYLES();
-      document.body.innerHTML = generateHTML("REDDIT");
-      break;
-  }
+  let domain = /:\/\/([^\/]+)/.exec(window.location.href)[1];
+  console.log(domain);
+  document.head.innerHTML = generateSTYLES();
+  document.body.innerHTML = generateHTML(domain.toUpperCase());
+  // switch (window.location.hostname) {
+  //   case "www.youtube.com":
+  //     document.head.innerHTML = generateSTYLES();
+  //     document.body.innerHTML = generateHTML("YOUTUBE");
+  //     break;
+  //   case "x.com":
+  //     document.head.innerHTML = generateSTYLES();
+  //     document.body.innerHTML = generateHTML("TWITTER");
+  //     break;
+  //   case "www.reddit.com":
+  //     document.head.innerHTML = generateSTYLES();
+  //     document.body.innerHTML = generateHTML("REDDIT");
+  //     break;
+  // }
 }
   

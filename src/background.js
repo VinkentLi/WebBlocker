@@ -11,20 +11,23 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 if (tab.url == null) {
                     continue;
                 }
-                let domain = new URL(tab.url).hostname;
-                console.log(domain);
-                if (blockedWebsites.includes(domain)) {
+                let host = new URL(tab.url).hostname;
+                console.log(host);
+                if (blockedWebsites.includes(host)) {
                     chrome.tabs.update(tab.id, {url: tab.url});
                 }
             }
         });
         break;
     case 'request_block':
-        // chrome.tabs.query({currentWindow: false, active: true}, function (tabs){
-        //     var activeTab = tabs[0];
-        //     chrome.tabs.sendMessage(activeTab.id, {message: "send_block", value: shouldBlock});
-        // });
-        sendResponse({value: shouldBlock});
+        console.log("sender.url: ", sender.url);
+        let host = new URL(sender.url).hostname;
+        console.log(host);
+        if (!blockedWebsites.includes(host)) {
+            sendResponse({value: false});
+        } else {
+            sendResponse({value: shouldBlock});
+        }
         console.log("responded");
         break;
     }
