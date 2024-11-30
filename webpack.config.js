@@ -5,7 +5,8 @@ module.exports = {
     entry: {
         popup: './src/popup.js',
         background: './src/background.js',
-        content: './src/content.js'
+        content: './src/content.js',
+        writeBlockedWebsites: './src/writeBlockedWebsites',
     },
     output: {
         filename: '[name].js',

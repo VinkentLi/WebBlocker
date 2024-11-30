@@ -30,5 +30,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         }
         console.log("responded");
         break;
+    case 'request_blocked_sites':
+        console.log("received message");
+        console.log(blockedWebsites);
+        sendResponse({value: blockedWebsites});
+        break;
     }
 });
