@@ -10,10 +10,12 @@ module.exports = {
     },
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        clean: true,
     },
     mode: 'development',
     watch: true,
+    devtool: 'cheap-module-source-map',
     plugins: [
         // new HtmlWebpackPlugin({
         //     template: './src/popup.html',
@@ -25,8 +27,8 @@ module.exports = {
                 }, {
                     from: path.resolve(__dirname, './assets'),
                     to: path.resolve(__dirname, './dist/assets')
-                }
+                },
             ]
-        })
+        }),
     ]
 }
