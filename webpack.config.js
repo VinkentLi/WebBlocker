@@ -7,6 +7,7 @@ module.exports = {
         background: './src/background.js',
         content: './src/content.js',
         writeBlockedWebsites: './src/writeBlockedWebsites',
+        settings: './src/settings.js',
     },
     output: {
         filename: '[name].js',

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <style>
+    body {
+      background: #dafeff;
+      color: #000000;
+    }
+  </style>
+  <head> 
+  </head>
+  <body>
+    <style>
+      p {
+        font-size: 14px;
+      }
+    </style>
+    <div class="main">
+      <h1>Settings</h1>
+      <hr />
+      <p>
+        Current Blocked Sites:
+        <span id="websites"></span>
+        <script src="writeBlockedWebsites.js"></script>
+      </p>
+    </div>
+
+    <label>
+      <p>
+        <span>Add another website to block:</span>
+        <input type="text" name="newWebsite" placeholder="www.youtube.com/">
+        <button id="newWebsiteSubmit">Submit</button>
+      </p>
+    <label>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

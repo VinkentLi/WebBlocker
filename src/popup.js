@@ -13,9 +13,13 @@ function loadCheckboxState() {
     }
 }
 
-// Attach event listener to the checkboxes to save their states
+function openSettings() {
+    window.open("./settings.html", "_blank");
+}
+
 const checkbox = document.querySelector('.myCheckbox');
 checkbox.addEventListener('change', saveCheckboxState);
-
-// Load checkbox states on page load
 document.addEventListener('DOMContentLoaded', loadCheckboxState);
+
+const settingsButton = document.querySelector('.settingsButton');
+settingsButton.addEventListener('click', openSettings);

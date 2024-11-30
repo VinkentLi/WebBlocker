@@ -14,27 +14,20 @@
         font-size: 14px;
       }
     </style>
-    <div class="main">
-      <h1>Stop Procastinating</h1>
-      <hr />
-      <p>
-        Current Blocked Sites:
-        <span id="websites"></span>
-        <script src="writeBlockedWebsites.js"></script>
-      </p>
-    </div>
 
-    <div class="input">
-      <p>
-        <span>Add another website to block:</span>
-        <input type="text" name="newWebsite" placeholder="www.youtube.com/">
-        <button id="newWebsiteSubmit">Submit</button>
-      </p>
-    </div>
-
-    <label>
+    <h1>Stop Procastinating</h1>
+    <div>
       <input type="checkbox" class="myCheckbox"> I have finished all work
-    </label>
+    </div>
+
+    <hr>
+
+    <div>
+      Settings:
+      <button class="settingsButton">
+        <img src="https://cdn.pixabay.com/photo/2016/08/30/13/18/settings-1630709_1280.png" width="20" height="20" alt="settings">
+      </button>
+    </div>
 
     <script src="popup.js"></script>
   </body>
