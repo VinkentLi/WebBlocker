@@ -6,5 +6,6 @@ Stole the clouds and some code from [here](https://www.youtube.com/watch?v=dIrXI
 ## Plans:
 - [ ] Give ability to add and remove blocked websites
 - [ ] Add checklist of tasks
+- [ ] Add a calender
 - [ ] Allow people to play music
-- [ ] Think of more ideas
+- [ ] Create an account system so people can sync to other devices
