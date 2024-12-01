@@ -1,5 +1,12 @@
-let checklist = {};
+let checklist = [];
 let isAllChecked = false;
+
+document.addEventListener('DOMContentLoaded', loadChecklist);
+const addTaskButton = document.querySelector(".addTaskSubmit");
+addTaskButton.addEventListener('click', addTask);
+
+const settingsButton = document.querySelector('.settingsButton');
+settingsButton.addEventListener('click', openSettings);
 
 function loadChecklist() {
     chrome.storage.sync.get(["checklist"]).then((items) => {
@@ -24,13 +31,17 @@ function checkAllChecked() {
 
 function writeChecklist() {
     const checklistClass = document.querySelector(".checklist");
-    for (const [className, data] of Object.entries(checklist)) {
+    for (const [index, data] of Object.entries(checklist)) {
+        const className = `check_${index}`;
         checklistClass.appendChild(createCheckbox(className, data));
     }
-    for (const [className, data] of Object.entries(checklist)) {
+    for (const [index, data] of Object.entries(checklist)) {
+        const className = `check_${index}`;
         let checkbox = document.querySelector(`.${className}`);
+        let removeButton = document.querySelector(`.remove_${className}`);
         checkbox.checked = data.value;
         checkbox.addEventListener('change', updateCheckbox);
+        removeButton.addEventListener('click', removeTask);
     }
 }
 
@@ -44,16 +55,34 @@ function createCheckbox(className, data) {
     let text = document.createElement("span");
     text.innerText = data.task;
 
+    let removeButton = document.createElement("button");
+    removeButton.innerText = "Remove";
+    removeButton.className = `remove_${className}`;
+    removeButton.style = "float: right;";
+
     paragraph.appendChild(checkbox);
     paragraph.appendChild(text);
+    paragraph.appendChild(removeButton);
 
     return paragraph;
 }
 
 function updateCheckbox(evt) {
-    checklist[evt.target.className].value = evt.target.checked;
+    let index = convertClassNameToIndex(evt.target.className, "check_");
+    console.log(checklist, index);
+    checklist[index].value = evt.target.checked;
     console.log(evt);
     saveChecklist();
+    updateShouldBlock();
+}
+
+function convertClassNameToIndex(className, prefix) {
+    console.log(prefix.length, className.length);
+    console.log(className.slice(prefix.length, className.length));
+    return parseInt(className.slice(prefix.length, className.length));
+}
+
+function updateShouldBlock() {
     let newAllChecked = checkAllChecked();
     if (newAllChecked != isAllChecked) {
         isAllChecked = newAllChecked;
@@ -61,24 +90,25 @@ function updateCheckbox(evt) {
     }
 }
 
+function removeTask(evt) {
+
+}
+
+function addTask(evt) {
+    let inputBox = document.querySelector(".addTask");
+    let newTask = inputBox.value;
+    checklist.push({task: newTask, value: false});
+    console.log("added new task ", newTask);
+    saveChecklist();
+    updateShouldBlock();
+    evt.target.disabled = true;
+    location.reload();
+}
+
 function saveChecklist() {
     chrome.storage.sync.set({"checklist": checklist});
 }
 
-document.addEventListener('DOMContentLoaded', loadChecklist);
-
 function openSettings() {
     window.open("./settings.html", "_blank");
-}
-
-const settingsButton = document.querySelector('.settingsButton');
-settingsButton.addEventListener('click', openSettings);
-
-function turnIntoValidClassName(name) {
-    return name.replace(/[^a-z0-9]/g, function(s) {
-        var c = s.charCodeAt(0);
-        if (c == 32) return '-';
-        if (c >= 65 && c <= 90) return '_' + s.toLowerCase();
-        return '__' + ('000' + c.toString(16)).slice(-4);
-    });
 }
