@@ -30,10 +30,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         let website = request.value;
         if (request.action == 'add') {
             addWebsite(website);
-            sendResponse(); // dont question this
         } else if (request.action == 'remove') {
             removeWebsite(website);
-            sendResponse();
         }
         break;
     }

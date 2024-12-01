@@ -21,9 +21,8 @@ async function addWebsite() {
     let fixedURL = await findRedirect(url);
     console.log(fixedURL);
     let host = new URL(fixedURL).hostname;
-    chrome.runtime.sendMessage({message: 'modify_blocked_sites', action: 'add', value: host}, function (response) {
-        // location.reload();
-    });
+    chrome.runtime.sendMessage({message: 'modify_blocked_sites', action: 'add', value: host});
+    location.reload();
 }
 
 async function removeWebsite() {
@@ -33,9 +32,8 @@ async function removeWebsite() {
     let fixedURL = await findRedirect(url);
     console.log(fixedURL);
     let host = new URL(fixedURL).hostname;
-    chrome.runtime.sendMessage({message: 'modify_blocked_sites', action: 'remove', value: host}, function (response) {
-        location.reload();
-    });
+    chrome.runtime.sendMessage({message: 'modify_blocked_sites', action: 'remove', value: host});
+    location.reload();
 }
 
 const newWebsiteButton = document.querySelector('.newWebsiteSubmit');
