@@ -1,28 +1,40 @@
-function saveCheckboxState() {
-    const checkbox = document.querySelector('.myCheckbox');
-    chrome.storage.sync.set({[checkbox.className]: checkbox.checked}, function () {
-        console.log(`set ${checkbox.className} to ${checkbox.checked}`);
+const checklist = {
+    "Eat food": false,
+    "Code": true,
+    "Be happy": false
+};
+
+function turnIntoValidClassName(name) {
+    return name.replace(/[^a-z0-9]/g, function(s) {
+        var c = s.charCodeAt(0);
+        if (c == 32) return '-';
+        if (c >= 65 && c <= 90) return '_' + s.toLowerCase();
+        return '__' + ('000' + c.toString(16)).slice(-4);
     });
-    // localStorage.setItem(checkbox.className, checkbox.checked);
-    chrome.runtime.sendMessage({message: "set_block", value: !checkbox.checked});
 }
 
-// Function to load checkbox states from Local Storage
-async function loadCheckboxState() {
-    const checkbox = document.querySelector('.myCheckbox');
-    const stored = chrome.storage.sync.get([checkbox.className]).then((items) => {
-        checkbox.checked = items[checkbox.className];
-        console.log("set checked status to ", checkbox.checked);
-    });
+function writeChecklist() {
+    const checklistClass = document.querySelector(".checklist");
+    let checklistHtml = "";
+    for (const [task, value] of Object.entries(checklist)) {
+        let className = turnIntoValidClassName(task);
+        console.log(className);
+        checklistHtml += `<p><input type="checkbox" class="check_${className}">${task}</p>\n`;
+    }
+    console.log(checklistHtml);
+    checklistClass.innerHTML = checklistHtml;
+    for (const [task, value] of Object.entries(checklist)) {
+        let className = turnIntoValidClassName(task);
+        let checkbox = document.querySelector(`.check_${className}`);
+        checkbox.checked = value;
+    }
 }
+
+document.addEventListener('DOMContentLoaded', writeChecklist);
 
 function openSettings() {
     window.open("./settings.html", "_blank");
 }
-
-const checkbox = document.querySelector('.myCheckbox');
-checkbox.addEventListener('change', saveCheckboxState);
-document.addEventListener('DOMContentLoaded', loadCheckboxState);
 
 const settingsButton = document.querySelector('.settingsButton');
 settingsButton.addEventListener('click', openSettings);
