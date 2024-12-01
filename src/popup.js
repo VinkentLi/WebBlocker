@@ -68,7 +68,7 @@ function createCheckbox(className, data) {
 }
 
 function updateCheckbox(evt) {
-    let index = convertClassNameToIndex(evt.target.className, "check_");
+    let index = parseInt(trimPrefix(evt.target.className, "check_"));
     console.log(checklist, index);
     checklist[index].value = evt.target.checked;
     console.log(evt);
@@ -76,10 +76,8 @@ function updateCheckbox(evt) {
     updateShouldBlock();
 }
 
-function convertClassNameToIndex(className, prefix) {
-    console.log(prefix.length, className.length);
-    console.log(className.slice(prefix.length, className.length));
-    return parseInt(className.slice(prefix.length, className.length));
+function trimPrefix(className, prefix) {
+    return className.slice(prefix.length, className.length);
 }
 
 function updateShouldBlock() {
@@ -91,17 +89,25 @@ function updateShouldBlock() {
 }
 
 function removeTask(evt) {
-
+    const removeButton = evt.target;
+    const taskIndex = parseInt(trimPrefix(removeButton.className, 'remove_check_'));
+    checklist.splice(taskIndex, 1);
+    console.log("deleted task");
+    saveChecklist();
+    updateShouldBlock();
+    removeButton.disabled = true;
+    location.reload();
 }
 
 function addTask(evt) {
-    let inputBox = document.querySelector(".addTask");
-    let newTask = inputBox.value;
+    const inputBox = document.querySelector(".addTask");
+    const newTask = inputBox.value;
     checklist.push({task: newTask, value: false});
     console.log("added new task ", newTask);
     saveChecklist();
     updateShouldBlock();
-    evt.target.disabled = true;
+    const addButton = evt.target;
+    addButton.disabled = true;
     location.reload();
 }
 
