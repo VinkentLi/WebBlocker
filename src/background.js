@@ -6,13 +6,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     case "set_block":
         shouldBlock = request.value;
         chrome.tabs.query({}, function (tabs){
-            console.log(tabs.length);
+            // console.log(tabs.length);
             for (let tab of tabs) {
                 if (tab.url == null) {
                     continue;
                 }
                 let host = new URL(tab.url).hostname;
-                console.log(host);
+                // console.log(host);
                 if (blockedWebsites.includes(host)) {
                     chrome.tabs.update(tab.id, {url: tab.url});
                 }
@@ -20,25 +20,25 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         });
         break;
     case 'request_block':
-        console.log(shouldBlock);
-        console.log("sender.url: ", sender.url);
+        // console.log(shouldBlock);
+        // console.log("sender.url: ", sender.url);
         let host = new URL(sender.url).hostname;
-        console.log(host);
+        // console.log(host);
         if (!blockedWebsites.includes(host)) {
             sendResponse({value: false});
         } else {
             sendResponse({value: shouldBlock});
         }
-        console.log("responded");
+        // console.log("responded");
         break;
     case 'request_blocked_sites':
-        console.log("received message");
-        console.log(blockedWebsites);
+        // console.log("received message");
+        // console.log(blockedWebsites);
         sendResponse({value: blockedWebsites});
         break;
     case 'modify_blocked_sites':
         let website = request.value;
-        console.log(website);
+        // console.log(website);
         if (request.action == 'add') {
             if (!blockedWebsites.includes(website)) {
                 blockedWebsites.push(website);
