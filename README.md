@@ -5,8 +5,8 @@ Stole the clouds and some code from [here](https://www.youtube.com/watch?v=dIrXI
 
 ## Plans:
 - [x] Give ability to add and remove blocked websites
+- [ ] Save the websites you have blocked
 - [ ] Add checklist of tasks
 - [ ] Add a calender
 - [ ] Allow users to take breaks
 - [ ] Allow people to play music
-- [ ] Create an account system so people can sync to other devices
