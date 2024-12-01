@@ -5,13 +5,13 @@ function saveBlockedWebsites() {
 }
 
 async function loadBlockedWebsites() {
-    return await chrome.storage.sync.get(["blockedWebsites"]);
+    return chrome.storage.sync.get(["blockedWebsites"]).then((items) => {
+        return items['blockedWebsites'];
+    });
 }
 
 let shouldBlock = false;
-let blockedWebsites = await loadBlockedWebsites().then((items) => {
-    return items['blockedWebsites'];
-});
+let blockedWebsites = await loadBlockedWebsites()
 console.log(blockedWebsites);
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
