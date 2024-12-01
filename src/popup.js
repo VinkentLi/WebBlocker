@@ -1,16 +1,19 @@
 function saveCheckboxState() {
     const checkbox = document.querySelector('.myCheckbox');
-    localStorage.setItem(checkbox.className, checkbox.checked);
+    chrome.storage.sync.set({[checkbox.className]: checkbox.checked}, function () {
+        console.log(`set ${checkbox.className} to ${checkbox.checked}`);
+    });
+    // localStorage.setItem(checkbox.className, checkbox.checked);
     chrome.runtime.sendMessage({message: "set_block", value: !checkbox.checked});
 }
 
 // Function to load checkbox states from Local Storage
-function loadCheckboxState() {
+async function loadCheckboxState() {
     const checkbox = document.querySelector('.myCheckbox');
-    const savedState = localStorage.getItem(checkbox.className);
-    if (savedState !== null) {
-        checkbox.checked = savedState === 'true';
-    }
+    const stored = chrome.storage.sync.get([checkbox.className]).then((items) => {
+        checkbox.checked = items[checkbox.className];
+        console.log("set checked status to ", checkbox.checked);
+    });
 }
 
 function openSettings() {
