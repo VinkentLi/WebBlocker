@@ -1,4 +1,4 @@
-let shouldBlock = true;
+let shouldBlock = false;
 let blockedWebsites = ["www.youtube.com", "www.reddit.com"];
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -20,6 +20,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         });
         break;
     case 'request_block':
+        console.log(shouldBlock);
         console.log("sender.url: ", sender.url);
         let host = new URL(sender.url).hostname;
         console.log(host);

@@ -1,13 +1,13 @@
 function saveCheckboxState() {
     const checkbox = document.querySelector('.myCheckbox');
-    localStorage.setItem(checkbox.id, checkbox.checked);
+    localStorage.setItem(checkbox.className, checkbox.checked);
     chrome.runtime.sendMessage({message: "set_block", value: !checkbox.checked});
 }
 
 // Function to load checkbox states from Local Storage
 function loadCheckboxState() {
     const checkbox = document.querySelector('.myCheckbox');
-    const savedState = localStorage.getItem(checkbox.id);
+    const savedState = localStorage.getItem(checkbox.className);
     if (savedState !== null) {
         checkbox.checked = savedState === 'true';
     }
