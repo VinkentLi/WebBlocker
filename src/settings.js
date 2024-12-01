@@ -22,7 +22,7 @@ async function addWebsite() {
     console.log(fixedURL);
     let host = new URL(fixedURL).hostname;
     chrome.runtime.sendMessage({message: 'modify_blocked_sites', action: 'add', value: host}, function (response) {
-        location.reload();
+        // location.reload();
     });
 }
 

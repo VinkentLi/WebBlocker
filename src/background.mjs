@@ -1,5 +1,18 @@
+function saveBlockedWebsites() {
+    chrome.storage.sync.set({"blockedWebsites": blockedWebsites}, function () {
+        console.log("stored blockedWebsites");
+    });
+}
+
+async function loadBlockedWebsites() {
+    return await chrome.storage.sync.get(["blockedWebsites"]);
+}
+
 let shouldBlock = false;
-let blockedWebsites = ["www.youtube.com", "www.reddit.com"];
+let blockedWebsites = await loadBlockedWebsites().then((items) => {
+    return items['blockedWebsites'];
+});
+console.log(blockedWebsites);
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     switch (request.message) {
@@ -52,8 +65,15 @@ function returnShouldBlock(sender, sendResponse) {
 }
 
 function addWebsite(website) {
-    if (!blockedWebsites.includes(website)) {
+    console.log(blockedWebsites);
+    if (blockedWebsites.length == 0) {
+        blockedWebsites = [website];
+        saveBlockedWebsites();
+    }
+    else if (!blockedWebsites.includes(website)) {
         blockedWebsites.push(website);
+        console.log("added website ", website);
+        saveBlockedWebsites();
     }
 }
 
@@ -61,5 +81,7 @@ function removeWebsite(website) {
     const index = blockedWebsites.indexOf(website);
     if (index > -1) {
         blockedWebsites.splice(index, 1);
+        console.log("removed website", website);
+        saveBlockedWebsites();
     }
 }

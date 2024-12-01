@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: {
         popup: './src/popup.js',
-        background: './src/background.js',
+        background: './src/background.mjs',
         content: './src/content.js',
         writeBlockedWebsites: './src/writeBlockedWebsites',
         settings: './src/settings.js',
