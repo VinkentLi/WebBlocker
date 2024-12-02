@@ -3,7 +3,7 @@ Chrome Extension that blocks specific websites until you complete all your tasks
 
 Stole the clouds and some code from [here](https://www.youtube.com/watch?v=dIrXIJ781DQ)
 
-## How to build (in theory):
+## How to build:
 1. Clone the project
 2. Run `npm install` to install the dependencies
 3. Run `npm run build` to build the project, and it will create a folder called "dist"
